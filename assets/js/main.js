@@ -789,6 +789,9 @@ ratingStars.forEach(star => {
     });
 });
 
+const makeReviewKey = (name = '', text = '') => String(name).trim().toLowerCase() + '::' + String(text).trim().toLowerCase();
+const getReviewCardKey = (card) => makeReviewKey(card.querySelector('h3')?.textContent || '', card.querySelector('p')?.textContent || '');
+const dedupeReviewCards = (grid) => { const seen = new Set(); Array.from(grid.querySelectorAll('.review-card')).forEach(card => { const key = getReviewCardKey(card); if (seen.has(key)) card.remove(); else seen.add(key); }); };
 const createReviewCard = ({ name, role, text, rating, id }) => {
     const card = document.createElement('article');
     card.className = 'review-card review-card-new';
@@ -836,19 +839,20 @@ if (reviewCards.length > 1 && reviewsGrid) {
     let reviewsPaused = false;
 
     const showReview = (nextIndex) => {
-        reviewCards.forEach((card, index) => {
-            const isActive = index === nextIndex;
-            card.classList.toggle('is-active', isActive);
+     const filteredReviews = [];
+    const savedReviewKeys = new Set();
+    savedReviews.forEach(review => {
+        const key = makeReviewKey(review.name, review.text);
+        if (String(review.name || '').trim() === 'محمود' || savedReviewKeys.has(key)) return;
+        savedReviewKeys.add(key);
+        filteredReviews.push(review);
+    });    card.classList.toggle('is-active', isActive);
             card.classList.toggle('is-featured', isActive);
             card.setAttribute('aria-hidden', 'false');
         });
         document.querySelectorAll('.reviews-dots span').forEach((dot, index) => {
-            dot.classList.toggle('active', index === nextIndex);
-        });
-        activeReview = nextIndex;
-    };
-
-    const rotateReviews = () => {
+            dot.classList.toggle('active', index === n    filteredReviews.forEach(review => reviewsGrid.appendChild(createReviewCard(review)));
+    dedupeReviewCards(reviewsGrid);= () => {
         if (!reviewsPaused) {
             showReview((activeReview + 1) % reviewCards.length);
         }
@@ -897,10 +901,9 @@ if (reviewCards.length > 1 && reviewsGrid) {
 
     reviewForm?.addEventListener('submit', async (event) => {
         event.preventDefault();
-        const formData = new FormData(reviewForm);
-        const review = {
-            id: `review-${Date.now()}`,
-            name: String(formData.get('reviewerName')).trim(),
+        const for    let touchStartX = 0, touchStartY = 0, touchStartTime = 0;
+    reviewsGrid.addEventListener('touchstart', (event) => { pauseReviews(); const touch = event.changedTouches[0]; touchStartX = touch.clientX; touchStartY = touch.clientY; touchStartTime = Date.now(); }, { passive: true });
+    reviewsGrid.addEventListener('touchend', (event) => { const touch = event.changedTouches[0]; const deltaX = touch.clientX - touchStartX; const deltaY = touch.clientY - touchStartY; if (Date.now() - touchStartTime < 900 && Math.abs(deltaX) > 45 && Math.abs(deltaX) > Math.abs(deltaY)) { showReview(deltaX < 0 ? (activeReview + 1) % reviewCards.length : (activeReview - 1 + reviewCards.length) % reviewCards.length); } window.setTimeout(resumeReviews, 350); }, { passive: true });,
             role: String(formData.get('reviewerRole')).trim(),
             text: String(formData.get('reviewText')).trim(),
             rating: Number(formData.get('reviewRating'))
