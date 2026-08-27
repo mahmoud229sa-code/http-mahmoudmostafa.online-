@@ -757,6 +757,16 @@ revealElements.forEach(el => {
     revealObserver.observe(el);
 });
 
+const reviewKeys = new Set();
+document.querySelectorAll('.review-card').forEach(card => {
+    const key = card.textContent.replace(/\s+/g, ' ').trim().toLowerCase();
+    if (reviewKeys.has(key)) {
+        card.remove();
+    } else {
+        reviewKeys.add(key);
+    }
+});
+
 let reviewCards = Array.from(document.querySelectorAll('.review-card'));
 const reviewsGrid = document.querySelector('.reviews-grid');
 const reviewsAddButton = document.getElementById('reviewsAddButton');
@@ -816,7 +826,13 @@ function getReviewIcon(role = '') {
 
 if (reviewsGrid) {
     const savedReviews = JSON.parse(localStorage.getItem('siteReviews') || '[]');
-    const filteredReviews = savedReviews.filter(review => String(review.name || '').trim() !== 'محمود');
+    const savedReviewKeys = new Set();
+    const filteredReviews = savedReviews.filter(review => {
+        const key = `${String(review.name || '').trim().toLowerCase()}|${String(review.text || '').trim().toLowerCase()}`;
+        if (savedReviewKeys.has(key)) return false;
+        savedReviewKeys.add(key);
+        return String(review.name || '').trim() !== 'محمود';
+    });
     localStorage.setItem('siteReviews', JSON.stringify(filteredReviews));
     filteredReviews.forEach(review => reviewsGrid.appendChild(createReviewCard(review)));
     reviewCards = Array.from(reviewsGrid.querySelectorAll('.review-card'));
