@@ -627,6 +627,19 @@ async function loadManagedContent() {
     const { data, error } = await siteSupabase.from('site_content').select('*').eq('is_visible', true).order('sort_order');
     if (error || !data?.length) return;
 
+    const settings = Object.fromEntries(data.filter(item => item.content_type === 'setting').map(item => [item.title, item.description]));
+    const textTargets = { heroTitle: '.hero-content h1', heroTagline: '.hero-tagline', heroDesc: '.hero-desc', aboutIntro: '#about .about-text p[data-i18n="aboutIntro"]', contactDesc: '#contact .section-desc' };
+    Object.entries(textTargets).forEach(([key, selector]) => { const element = document.querySelector(selector); if (element && settings[key]) element.textContent = settings[key]; });
+    if (settings.theme === 'light' || settings.theme === 'dark') setTheme(settings.theme);
+    if (/^#[0-9a-f]{6}$/i.test(settings.primaryColor)) document.documentElement.style.setProperty('--primary-color', settings.primaryColor);
+    if (/^#[0-9a-f]{6}$/i.test(settings.background)) document.documentElement.style.setProperty('--dark-bg', settings.background);
+    if (settings.radius) document.documentElement.style.setProperty('--site-radius', settings.radius);
+    if (settings.seoTitle) document.title = settings.seoTitle;
+    if (settings.seoDescription) document.querySelector('meta[name="description"]')?.setAttribute('content', settings.seoDescription);
+    const sectionIds = { hero: 'home', home: 'home', portfolio: 'portfolio', videos: 'videos', horizontalVideos: 'horizontal-videos', reviews: 'reviews', about: 'about', contact: 'contact' };
+    const { data: sections } = await siteSupabase.from('site_sections').select('section_key,is_visible,sort_order').order('sort_order');
+    (sections || []).forEach(section => { const element = document.getElementById(sectionIds[section.section_key] || section.section_key); if (element) element.hidden = !section.is_visible; });
+
     data.filter(item => item.content_type === 'skill').forEach(item => {
         const list = document.querySelector('.skills-list');
         if (list && !Array.from(list.children).some(skill => skill.textContent === item.title)) {
