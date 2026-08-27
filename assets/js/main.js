@@ -824,10 +824,22 @@ function getReviewIcon(role = '') {
     if (roleText.includes('تسويق') || roleText.includes('مسوق') || roleText.includes('marketing')) return 'fa-chart-line';
     if (roleText.includes('مشروع') || roleText.includes('تجارة') || roleText.includes('business')) return 'fa-briefcase';
     if (roleText.includes('تصميم') || roleText.includes('مصمم') || roleText.includes('design')) return 'fa-pen-ruler';
-    if (roleText.includes('برمج') || roleText.includes('مطور') || roleText.includes('developer')) return 'fa-code';
-    if (roleText.includes('تعليم') || roleText.includes('مدرس') || roleText.includes('teacher')) return 'fa-graduation-cap';
-    return 'fa-comment';
-}
+   const savedReviews = JSON.parse(localStorage.getItem('siteReviews') || '[]');
+const savedReviewKeys = new Set();
+
+const filteredReviews = savedReviews.filter(review => {
+    const key = `${String(review.name || '').trim().toLowerCase()}|${String(review.text || '').trim().toLowerCase()}`;
+
+    if (savedReviewKeys.has(key)) return false;
+    savedReviewKeys.add(key);
+    return String(review.name || '').trim() !== 'محمود';
+});
+
+localStorage.setItem('siteReviews', JSON.stringify(filteredReviews));
+filteredReviews.forEach(review => {
+    reviewsGrid.appendChild(createReviewCard(review));
+});
+reviewCards = Array.from(reviewsGrid.querySelectorAll('.review-card'));
 
 if (reviewsGrid) {
     const savedReviews = JSON.parse(localStorage.getItem('siteReviews') || '[]');
