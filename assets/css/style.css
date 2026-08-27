@@ -2335,6 +2335,14 @@ body.dark-mode .manus img {
         grid-template-columns: 1fr;
     }
 
+    .reviews-grid {
+        touch-action: pan-y;
+        user-select: none;
+        cursor: grab;
+    }
+    .reviews-grid:active {
+        cursor: grabbing;
+    }
     .review-card:not(.is-active) {
         display: none;
     }
