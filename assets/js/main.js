@@ -630,7 +630,7 @@ async function loadManagedContent() {
     const settings = Object.fromEntries(data.filter(item => item.content_type === 'setting').map(item => [item.title, item.description]));
     const textTargets = { heroTitle: '.hero-content h1', heroTagline: '.hero-tagline', heroDesc: '.hero-desc', aboutIntro: '#about .about-text p[data-i18n="aboutIntro"]', contactDesc: '#contact .section-desc' };
     Object.entries(textTargets).forEach(([key, selector]) => { const element = document.querySelector(selector); if (element && settings[key]) element.textContent = settings[key]; });
-    if (settings.theme === 'light' || settings.theme === 'dark') setTheme(settings.theme);
+    if (!localStorage.getItem('siteTheme') && (settings.theme === 'light' || settings.theme === 'dark')) setTheme(settings.theme);
     if (/^#[0-9a-f]{6}$/i.test(settings.primaryColor)) document.documentElement.style.setProperty('--primary-color', settings.primaryColor);
     if (/^#[0-9a-f]{6}$/i.test(settings.background)) document.documentElement.style.setProperty('--dark-bg', settings.background);
     if (settings.radius) document.documentElement.style.setProperty('--site-radius', settings.radius);
