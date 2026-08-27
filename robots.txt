@@ -1,0 +1,14 @@
+<!-- robots.txt equivalent in HTML for search engines -->
+<!-- Place this file as robots.txt in the root directory -->
+
+User-agent: *
+Allow: /
+Allow: /index.html
+Allow: /css/
+Allow: /js/
+Allow: /images/
+
+Disallow: /pages/admin.html
+Disallow: /private/
+
+Sitemap: /sitemap.xml

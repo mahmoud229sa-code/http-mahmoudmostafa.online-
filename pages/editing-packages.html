@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="باقات المونتاج الاحترافية مع محمود مصطفى للمحتوى والإعلانات والسوشيال ميديا.">
+    <title>باقات المونتاج | محمود مصطفى</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="icon" type="image/png" sizes="512x512" href="../assets/images/favicon-512.png">
+    <link rel="icon" type="image/png" sizes="256x256" href="../assets/images/favicon-256.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32.png">
+    <link rel="shortcut icon" href="../assets/images/favicon.ico">
+    <style>
+        .packages-page {
+            min-height: 100vh;
+            padding: 90px 0 70px;
+            background: transparent;
+        }
+
+        .packages-intro {
+            max-width: 720px;
+            margin: 0 auto 46px;
+            text-align: center;
+        }
+
+        .packages-intro h2 {
+            margin-bottom: 14px;
+        }
+
+        .packages-intro p {
+            font-size: 1.05rem;
+        }
+
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 24px;
+            align-items: stretch;
+        }
+
+        .package-card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            padding: 32px 26px 26px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 14px;
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.25);
+        }
+
+        .package-card.featured {
+            border-color: var(--primary-color);
+            box-shadow: 0 22px 55px rgba(56, 189, 248, 0.16);
+            transform: translateY(-10px);
+        }
+
+        .package-badge {
+            position: absolute;
+            top: -14px;
+            right: 24px;
+            padding: 5px 14px;
+            border-radius: 999px;
+            background: var(--primary-color);
+            color: #04111d;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        .package-card h3 {
+            margin-bottom: 10px;
+        }
+
+        .package-subtitle {
+            min-height: 50px;
+            margin-bottom: 20px;
+        }
+
+        .package-price {
+            margin-bottom: 22px;
+            color: var(--primary-color);
+            font-size: 2rem;
+            font-weight: 800;
+        }
+
+        .package-price span {
+            color: var(--light-text);
+            font-size: 0.95rem;
+            font-weight: 400;
+        }
+
+        .package-features {
+            display: grid;
+            gap: 13px;
+            margin: 0 0 28px;
+            padding: 0;
+            list-style: none;
+        }
+
+        .package-features li {
+            color: var(--light-text);
+        }
+
+        .package-features i {
+            margin-left: 8px;
+            color: var(--success-color);
+        }
+
+        .package-card .btn {
+            width: 100%;
+            margin-top: auto;
+        }
+
+        .packages-note {
+            margin: 34px auto 0;
+            text-align: center;
+        }
+
+        .packages-note a {
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 1100px) {
+            .packages-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 850px) {
+            .packages-grid {
+                grid-template-columns: 1fr;
+                max-width: 560px;
+                margin: 0 auto;
+            }
+
+            .package-card.featured {
+                transform: none;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .packages-page {
+                padding-top: 70px;
+            }
+
+            .packages-intro {
+                margin-bottom: 28px;
+            }
+
+            .packages-intro h2 {
+                font-size: 2rem;
+            }
+
+            .packages-intro p,
+            .package-subtitle,
+            .package-features li,
+            .packages-note {
+                font-size: 0.95rem;
+                line-height: 1.7;
+            }
+
+            .package-card {
+                padding: 22px 16px 18px;
+            }
+
+            .package-card h3 {
+                font-size: 1.45rem;
+            }
+
+            .package-price {
+                font-size: 1.7rem;
+            }
+
+            .package-features {
+                gap: 10px;
+            }
+
+            .package-features li {
+                overflow-wrap: anywhere;
+                word-break: break-word;
+            }
+
+            .package-features i {
+                margin-left: 6px;
+            }
+
+            .package-card .btn {
+                font-size: 0.9rem;
+            }
+
+            .packages-note {
+                font-size: 0.9rem;
+            }
+        }
+
+        .packages-page {
+            background: transparent;
+        }
+
+        .packages-intro h2,
+        .package-card h3,
+        .packages-note {
+            color: #d9fbff;
+            text-shadow: 0 0 8px rgba(77, 228, 247, 0.42), 0 0 22px rgba(28, 215, 235, 0.18);
+        }
+
+        .packages-intro p,
+        .package-subtitle,
+        .package-features li,
+        .package-price span {
+            color: #a9d7e7;
+            text-shadow: 0 0 7px rgba(56, 189, 248, 0.2);
+        }
+
+        .package-card {
+            background: rgba(255, 255, 255, 0.055);
+            border-color: rgba(109, 224, 239, 0.22);
+            border-radius: 18px;
+            backdrop-filter: blur(12px);
+            transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+        }
+
+        .package-card:hover {
+            transform: translateY(-8px);
+            border-color: #4de4f7;
+            box-shadow: 0 28px 60px rgba(0, 0, 0, 0.42), 0 0 26px rgba(28, 215, 235, 0.16);
+        }
+
+        .package-card.featured {
+            box-shadow: 0 22px 55px rgba(56, 189, 248, 0.18), 0 0 24px rgba(28, 215, 235, 0.12);
+        }
+
+        body:not(.dark-mode) .packages-page {
+            background: transparent;
+        }
+
+        body:not(.dark-mode) .packages-intro h2,
+        body:not(.dark-mode) .package-card h3,
+        body:not(.dark-mode) .packages-note {
+            color: #0f172a;
+            text-shadow: none;
+        }
+
+        body:not(.dark-mode) .packages-intro p,
+        body:not(.dark-mode) .package-subtitle,
+        body:not(.dark-mode) .package-features li,
+        body:not(.dark-mode) .package-price span {
+            color: #475569;
+            text-shadow: none;
+        }
+
+        body:not(.dark-mode) .package-card {
+            background: rgba(255, 255, 255, 0.88);
+            border-color: rgba(15, 23, 42, 0.14);
+        }
+
+        @keyframes packagesSpaceDrift {
+            from { background-position: 0 0, 34px 46px, 0 0; }
+            to { background-position: 96px 96px, -114px 194px, 0 0; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="../index.html" class="logo" aria-label="العودة إلى الصفحة الرئيسية">
+                <h1>محمود مصطفى</h1>
+                <p class="subtitle">مصمم فيديو احترافي</p>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="../index.html">الرئيسية</a></li>
+                <li><a href="../index.html#portfolio">أعمالي</a></li>
+                <li><a href="../index.html#reviews">آراء العملاء</a></li>
+                <li><a href="editing-packages.html" class="active" aria-current="page">باقات المونتاج</a></li>
+                <li><a href="about.html">من أنا</a></li>
+                <li><a href="../index.html#contact">تواصل معي</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button id="themeToggle" class="btn btn-secondary theme-toggle-btn" type="button" aria-label="تبديل الوضع">
+                    <span class="theme-icon"><i class="fa-solid fa-moon"></i></span>
+                </button>
+            </div>
+            <button class="hamburger" type="button" aria-label="فتح القائمة" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="packages-page">
+        <div class="container">
+            <header class="packages-intro">
+                <h2>باقات المونتاج</h2>
+                <p>اختر الباقة المناسبة لمشروعك، وسنحوّل لقطاتك إلى فيديو احترافي جاهز للنشر.</p>
+            </header>
+
+            <section class="packages-grid" aria-label="باقات المونتاج المتاحة">
+                <article class="package-card">
+                    <h3>الباقة الأساسية</h3>
+                    <p class="package-subtitle">للفيديوهات القصيرة والمحتوى السريع.</p>
+                    <div class="package-price">4000 جنيه <span>/ فيديو</span></div>
+                    <ul class="package-features">
+                        <li><i class="fas fa-check"></i>مونتاج 3 فيديو حتى 60 ثانية</li>
+                        <li><i class="fas fa-check"></i>قص وترتيب اللقطات</li>
+                        <li><i class="fas fa-check"></i>موسيقى وانتقالات بسيطة</li>
+                        <li><i class="fas fa-check"></i>كتابات بسيطة</li>
+                        <li><i class="fas fa-check"></i>تسليم خلال 3 أيام</li>
+                    </ul>
+                    <a class="btn btn-secondary" href="../index.html#contact">اطلب الباقة</a>
+                </article>
+
+                <article class="package-card featured">
+                    <span class="package-badge">الأكثر طلبًا</span>
+                    <h3>الباقة الاحترافية</h3>
+                    <p class="package-subtitle">للسوشيال ميديا والإعلانات ذات التأثير القوي.</p>
+                    <div class="package-price">7000 جنيه <span>/ فيديو</span></div>
+                    <ul class="package-features">
+                        <li><i class="fas fa-check"></i>مونتاج 7 فيديو حتى دقيقتين</li>
+                        <li><i class="fas fa-check"></i>تصحيح ألوان احترافي</li>
+                        <li><i class="fas fa-check"></i>موشن جرافيك وترجمة</li>
+                        <li><i class="fas fa-check"></i>كتابات احترافية</li>
+                        <li><i class="fas fa-check"></i>بي رول خارجية</li>
+                        <li><i class="fas fa-check"></i>موسيقى ومؤثرات</li>
+                        <li><i class="fas fa-check"></i>كتابة محتوى الفيديوهات</li>
+                        <li><i class="fas fa-check"></i>تعديلان وتسليم خلال 4 أيام</li>
+                    </ul>
+                    <a class="btn btn-primary" href="../index.html#contact">اطلب الباقة</a>
+                </article>
+
+                <article class="package-card">
+                    <h3>باقة الشركات</h3>
+                    <p class="package-subtitle">حل متكامل للحملات والمحتوى المستمر.</p>
+                    <div class="package-price">15000 جنيه <span>/ فيديو</span></div>
+                    <ul class="package-features">
+                        <li><i class="fas fa-check"></i>برومو إعلاني حتى 5 دقائق</li>
+                        <li><i class="fas fa-check"></i>10 فيديو حتى 60 ثانية</li>
+                        <li><i class="fas fa-check"></i>مؤثرات بصرية وموشن متقدم</li>
+                        <li><i class="fas fa-check"></i>نسخ متعددة للسوشيال ميديا</li>
+                        <li><i class="fas fa-check"></i>تعديلات مفتوحة حسب الاتفاق</li>
+                        <li><i class="fas fa-check"></i>تصحيح ألوان احترافي</li>
+                        <li><i class="fas fa-check"></i>موشن جرافيك وترجمة</li>
+                        <li><i class="fas fa-check"></i>كتابات احترافية</li>
+                        <li><i class="fas fa-check"></i>بي رول خارجية</li>
+                        <li><i class="fas fa-check"></i>موسيقى ومؤثرات</li>
+                        <li><i class="fas fa-check"></i>كتابة اسكريبت الفيديوهات</li>
+                        <li><i class="fas fa-check"></i>إنشاء فويس أوفر بالذكاء الاصطناعي عند الطلب</li>
+                        <li><i class="fas fa-check"></i>إنشاء فيديوهات بالذكاء الاصطناعي</li>
+                        <li><i class="fas fa-check"></i>نشر الفيديوهات على صفحاتك مع كتابة المحتوى التسويقي لها</li>
+                        <li><i class="fas fa-check"></i>متابعة يومية</li>
+                    </ul>
+                    <a class="btn btn-secondary" href="../index.html#contact">اطلب الباقة</a>
+                </article>
+
+                <article class="package-card custom-package">
+                    <h3>باقة مخصصة لك</h3>
+                    <p class="package-subtitle">نصممها حسب نوع مشروعك واحتياجاتك وميزانيتك.</p>
+                    <div class="package-price">حسب الاتفاق</div>
+                    <ul class="package-features">
+                        <li><i class="fas fa-check"></i>تحديد الخدمات المناسبة لمشروعك</li>
+                        <li><i class="fas fa-check"></i>اختيار عدد الفيديوهات ومدتها</li>
+                        <li><i class="fas fa-check"></i>تحديد مستوى المونتاج والموشن</li>
+                        <li><i class="fas fa-check"></i>اختيار موعد التسليم المناسب</li>
+                        <li><i class="fas fa-check"></i>تسعير واضح بعد معرفة التفاصيل</li>
+                    </ul>
+                    <a class="btn btn-secondary" href="custom-package.html">صمّم باقتك</a>
+                </article>
+            </section>
+
+            <p class="packages-note">الباقة المخصصة تعني أننا نختار لك الخدمات والعدد والمدة وموعد التسليم بناءً على احتياجات مشروعك، ثم نحدد السعر بعد الاتفاق على التفاصيل. <a href="../index.html#contact">تواصل معنا للبدء</a></p>
+        </div>
+    </main>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+        document.querySelectorAll('.package-card:not(.custom-package)').forEach(card => {
+            const requestLink = card.querySelector('a.btn');
+            if (!requestLink) return;
+
+            requestLink.addEventListener('click', event => {
+                event.preventDefault();
+                const packageName = card.querySelector('h3')?.textContent.trim() || 'باقة مونتاج';
+                const price = card.querySelector('.package-price')?.textContent.trim() || 'حسب الاتفاق';
+                const features = Array.from(card.querySelectorAll('.package-features li'))
+                    .map(feature => `- ${feature.textContent.trim()}`)
+                    .join('\n');
+                const message = `مرحبًا، أريد طلب ${packageName}.\n\nالسعر: ${price}\n\nتفاصيل الباقة:\n${features}`;
+                window.open(`https://wa.me/201016022870?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer');
+            });
+        });
+    </script>
+</body>
+</html>

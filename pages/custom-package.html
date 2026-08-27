@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="صمم باقة المونتاج المناسبة لمشروعك وحدد الخدمات والميزانية التي تناسبك.">
+    <title>صمم باقتك | محمود مصطفى</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="icon" type="image/png" sizes="512x512" href="../assets/images/favicon-512.png">
+    <link rel="icon" type="image/png" sizes="256x256" href="../assets/images/favicon-256.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32.png">
+    <link rel="shortcut icon" href="../assets/images/favicon.ico">
+    <style>
+        .builder-page {
+            min-height: 100vh;
+            padding: 72px 0;
+            background: transparent;
+        }
+
+        .builder-header {
+            max-width: 760px;
+            margin: 0 auto 38px;
+            text-align: center;
+        }
+
+        .builder-header h2 {
+            margin-bottom: 12px;
+        }
+
+        .builder-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.65fr);
+            gap: 24px;
+            align-items: start;
+        }
+
+        .builder-panel,
+        .summary-panel {
+            padding: 28px;
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            background: var(--surface);
+        }
+
+        .builder-panel h3,
+        .summary-panel h3 {
+            margin-bottom: 22px;
+        }
+
+        .builder-section {
+            margin-bottom: 28px;
+        }
+
+        .builder-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .builder-section-title {
+            display: block;
+            margin-bottom: 13px;
+            color: var(--text-color);
+            font-weight: 700;
+        }
+
+        .choice-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .choice-card {
+            position: relative;
+        }
+
+        .choice-card input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .choice-card label {
+            display: block;
+            height: 100%;
+            padding: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--light-text);
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .choice-card label strong {
+            display: block;
+            margin-bottom: 4px;
+            color: var(--text-color);
+        }
+
+        .choice-card label:hover,
+        .choice-card input:checked + label {
+            border-color: var(--primary-color);
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--text-color);
+        }
+
+        .builder-field {
+            width: 100%;
+            padding: 13px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.18);
+            color: var(--text-color);
+            font: inherit;
+        }
+
+        .builder-field:focus {
+            outline: 2px solid rgba(56, 189, 248, 0.35);
+            border-color: var(--primary-color);
+        }
+
+        .summary-panel {
+            position: sticky;
+            top: 90px;
+        }
+
+        .summary-list {
+            display: grid;
+            gap: 11px;
+            margin: 0 0 22px;
+            padding: 0;
+            list-style: none;
+        }
+
+        .summary-list li {
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--light-text);
+        }
+
+        .summary-list strong {
+            color: var(--text-color);
+        }
+
+        .summary-budget {
+            margin: 20px 0;
+            padding: 16px;
+            border-radius: 10px;
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--text-color);
+        }
+
+        .summary-budget strong {
+            display: block;
+            margin-top: 4px;
+            color: var(--primary-color);
+            font-size: 1.55rem;
+        }
+
+        .summary-panel .btn {
+            width: 100%;
+        }
+
+        .builder-help {
+            margin-top: 13px;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        @media (max-width: 850px) {
+            .builder-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .summary-panel {
+                position: static;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .builder-page {
+                padding: 45px 0;
+            }
+
+            .builder-panel,
+            .summary-panel {
+                padding: 20px;
+            }
+
+            .choice-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        body:not(.dark-mode) .builder-panel,
+        body:not(.dark-mode) .summary-panel {
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        body:not(.dark-mode) .builder-field {
+            background: rgba(255, 255, 255, 0.8);
+            color: #0f172a;
+        }
+
+        body:not(.dark-mode) .choice-card label:hover,
+        body:not(.dark-mode) .choice-card input:checked + label {
+            background: rgba(2, 132, 199, 0.1);
+        }
+
+        body.dark-mode .builder-page {
+            background: transparent;
+        }
+
+        body.dark-mode .builder-header h2,
+        body.dark-mode .builder-panel h3,
+        body.dark-mode .summary-panel h3,
+        body.dark-mode .builder-section-title {
+            color: #d9fbff;
+            text-shadow: 0 0 8px rgba(77, 228, 247, 0.42), 0 0 22px rgba(28, 215, 235, 0.18);
+        }
+
+        body.dark-mode .builder-header p,
+        body.dark-mode .choice-card label,
+        body.dark-mode .summary-list li,
+        body.dark-mode .builder-help {
+            color: #a9d7e7;
+            text-shadow: 0 0 7px rgba(56, 189, 248, 0.2);
+        }
+
+        body.dark-mode .builder-panel,
+        body.dark-mode .summary-panel {
+            background: rgba(255, 255, 255, 0.055);
+            border-color: rgba(109, 224, 239, 0.22);
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(12px);
+        }
+
+        body.dark-mode .choice-card label:hover,
+        body.dark-mode .choice-card input:checked + label {
+            background: rgba(56, 189, 248, 0.1);
+            box-shadow: 0 0 18px rgba(28, 215, 235, 0.1);
+        }
+
+        @keyframes builderSpaceDrift {
+            from { background-position: 0 0, 34px 46px; }
+            to { background-position: 96px 96px, -114px 194px; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="../index.html" class="logo" aria-label="العودة إلى الصفحة الرئيسية">
+                <h1>محمود مصطفى</h1>
+                <p class="subtitle">مصمم فيديو احترافي</p>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="../index.html">الرئيسية</a></li>
+                <li><a href="editing-packages.html">الباقات الجاهزة</a></li>
+                <li><a href="custom-package.html" class="active" aria-current="page">صمم باقتك</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button id="themeToggle" class="btn btn-secondary theme-toggle-btn" type="button" aria-label="تبديل الوضع">
+                    <span class="theme-icon"><i class="fa-solid fa-moon"></i></span>
+                </button>
+                <a class="btn btn-secondary" href="editing-packages.html">العودة للباقات</a>
+            </div>
+            <button class="hamburger" type="button" aria-label="فتح القائمة" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="builder-page">
+        <div class="container">
+            <header class="builder-header">
+                <h2>صمّم باقتك بنفسك</h2>
+                <p>اختار احتياجات مشروعك، حدد الميزانية المناسبة لك، وسنراجع التفاصيل معك قبل التنفيذ.</p>
+            </header>
+
+            <div class="builder-layout">
+                <form class="builder-panel" id="packageBuilder">
+                    <h3>اختيارات الباقة</h3>
+
+                    <div class="builder-section">
+                        <span class="builder-section-title">نوع المحتوى</span>
+                        <div class="choice-grid">
+                            <div class="choice-card">
+                                <input id="social" type="radio" name="contentType" value="سوشيال ميديا" checked>
+                                <label for="social"><strong>سوشيال ميديا</strong>ريلز وشورتس ومحتوى سريع</label>
+                            </div>
+                            <div class="choice-card">
+                                <input id="advertising" type="radio" name="contentType" value="إعلان تجاري">
+                                <label for="advertising"><strong>إعلان تجاري</strong>فيديوهات ترويجية للمنتجات والخدمات</label>
+                            </div>
+                            <div class="choice-card">
+                                <input id="youtube" type="radio" name="contentType" value="يوتيوب">
+                                <label for="youtube"><strong>يوتيوب</strong>حلقات ومحتوى طويل</label>
+                            </div>
+                            <div class="choice-card">
+                                <input id="corporate" type="radio" name="contentType" value="محتوى شركات">
+                                <label for="corporate"><strong>محتوى شركات</strong>حملات ومحتوى مستمر</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="builder-section">
+                        <span class="builder-section-title">الخدمات المطلوبة</span>
+                        <div class="choice-grid">
+                            <div class="choice-card">
+                                <input id="editing" type="checkbox" name="services" value="مونتاج الفيديو" checked>
+                                <label for="editing"><strong>مونتاج الفيديو</strong>قص وترتيب وإخراج</label>
+                            </div>
+                            <div class="choice-card">
+                                <input id="motion" type="checkbox" name="services" value="موشن جرافيك">
+                                <label for="motion"><strong>موشن جرافيك</strong>عناوين وحركات احترافية</label>
+                            </div>
+                            <div class="choice-card">
+                                <input id="color" type="checkbox" name="services" value="تصحيح ألوان">
+                                <label for="color"><strong>تصحيح ألوان</strong>معالجة ألوان سينمائية</label>
+                            </div>
+                            <div class="choice-card">
+                                <input id="script" type="checkbox" name="services" value="كتابة محتوى أو اسكريبت">
+                                <label for="script"><strong>كتابة محتوى</strong>أفكار واسكريبت للفيديوهات</label>
+                            </div>
+                            <div class="choice-card">
+                                <input id="voiceover" type="checkbox" name="services" value="فويس أوفر بالذكاء الاصطناعي">
+                                <label for="voiceover"><strong>فويس أوفر AI</strong>تعليق صوتي عند الطلب</label>
+                            </div>
+                            <div class="choice-card">
+                                <input id="publishing" type="checkbox" name="services" value="نشر وتسويق">
+                                <label for="publishing"><strong>نشر وتسويق</strong>نشر وكتابة محتوى تسويقي</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="builder-section">
+                        <label class="builder-section-title" for="videoCount">عدد الفيديوهات</label>
+                        <input class="builder-field" id="videoCount" name="videoCount" type="number" min="1" max="100" value="1">
+                    </div>
+
+                    <div class="builder-section">
+                        <label class="builder-section-title" for="videoDuration">مدة الفيديو الواحد</label>
+                        <select class="builder-field" id="videoDuration" name="videoDuration">
+                            <option>حتى 60 ثانية</option>
+                            <option>من دقيقة إلى دقيقتين</option>
+                            <option>من دقيقتين إلى 5 دقائق</option>
+                            <option>أكثر من 5 دقائق</option>
+                        </select>
+                    </div>
+
+                    <div class="builder-section">
+                        <label class="builder-section-title" for="budget">الميزانية المناسبة لك بالجنيه</label>
+                        <input class="builder-field" id="budget" name="budget" type="number" min="0" step="100" placeholder="مثال: 5000" required>
+                    </div>
+
+                    <div class="builder-section">
+                        <label class="builder-section-title" for="notes">ملاحظات إضافية</label>
+                        <textarea class="builder-field" id="notes" name="notes" rows="4" placeholder="اكتب أي تفاصيل تساعدنا نفهم مشروعك..."></textarea>
+                    </div>
+
+                    <button class="btn btn-primary" type="submit">إرسال تفاصيل الباقة</button>
+                </form>
+
+                <aside class="summary-panel" aria-live="polite">
+                    <h3>ملخص باقتك</h3>
+                    <ul class="summary-list">
+                        <li>نوع المحتوى: <strong id="summaryContent">سوشيال ميديا</strong></li>
+                        <li>عدد الفيديوهات: <strong id="summaryCount">1</strong></li>
+                        <li>مدة الفيديو: <strong id="summaryDuration">حتى 60 ثانية</strong></li>
+                        <li>الخدمات: <strong id="summaryServices">مونتاج الفيديو</strong></li>
+                    </ul>
+                    <div class="summary-budget">
+                        ميزانيتك المقترحة
+                        <strong id="summaryBudget">لم تحددها بعد</strong>
+                    </div>
+                    <button class="btn btn-secondary" type="button" id="sharePackage">مشاركة تفاصيل الباقة</button>
+                    <p class="builder-help">بعد الإرسال سنراجع اختياراتك ونتواصل معك لتأكيد السعر والموعد.</p>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../assets/js/supabase-config.js"></script>
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+        const savedTheme = localStorage.getItem('siteTheme') || 'dark';
+
+        function updateThemeIcon(theme) {
+            if (!themeToggle) return;
+            const icon = theme === 'dark' ? 'fa-sun' : 'fa-moon';
+            themeToggle.innerHTML = '<span class="theme-icon"><i class="fa-solid ' + icon + '"></i></span>';
+            themeToggle.setAttribute('aria-label', theme === 'dark' ? 'تبديل للوضع الفاتح' : 'تبديل للوضع الداكن');
+        }
+
+        function setTheme(theme) {
+            document.body.classList.toggle('dark-mode', theme === 'dark');
+            localStorage.setItem('siteTheme', theme);
+            updateThemeIcon(theme);
+        }
+
+        themeToggle?.addEventListener('click', () => {
+            setTheme(document.body.classList.contains('dark-mode') ? 'light' : 'dark');
+        });
+
+        hamburger?.addEventListener('click', () => {
+            const isOpen = navMenu.classList.toggle('active');
+            hamburger.classList.toggle('active', isOpen);
+            hamburger.setAttribute('aria-expanded', String(isOpen));
+        });
+
+        setTheme(savedTheme);
+
+        const builderSupabaseClient = window.supabase && window.SUPABASE_CONFIG
+            ? window.supabase.createClient(window.SUPABASE_CONFIG.url, window.SUPABASE_CONFIG.anonKey)
+            : null;
+        const builder = document.getElementById('packageBuilder');
+        const contentInputs = document.querySelectorAll('input[name="contentType"]');
+        const serviceInputs = document.querySelectorAll('input[name="services"]');
+        const videoCount = document.getElementById('videoCount');
+        const videoDuration = document.getElementById('videoDuration');
+        const budget = document.getElementById('budget');
+        const notes = document.getElementById('notes');
+        const summaryContent = document.getElementById('summaryContent');
+        const summaryCount = document.getElementById('summaryCount');
+        const summaryDuration = document.getElementById('summaryDuration');
+        const summaryServices = document.getElementById('summaryServices');
+        const summaryBudget = document.getElementById('summaryBudget');
+
+        const getSelectedContent = () => document.querySelector('input[name="contentType"]:checked')?.value || 'غير محدد';
+        const getSelectedServices = () => Array.from(serviceInputs).filter(input => input.checked).map(input => input.value);
+
+        function updateSummary() {
+            const services = getSelectedServices();
+            summaryContent.textContent = getSelectedContent();
+            summaryCount.textContent = Math.min(100, Math.max(1, Number(videoCount.value) || 1));
+            summaryDuration.textContent = videoDuration.value;
+            summaryServices.textContent = services.length ? services.join('، ') : 'لم تحدد خدمات بعد';
+            summaryBudget.textContent = budget.value ? `${Number(budget.value).toLocaleString('ar-EG')} جنيه` : 'لم تحددها بعد';
+        }
+
+        document.querySelectorAll('#packageBuilder input, #packageBuilder select, #packageBuilder textarea').forEach(input => {
+            input.addEventListener('input', updateSummary);
+            input.addEventListener('change', updateSummary);
+        });
+
+        function buildMessage() {
+            const services = getSelectedServices();
+            return `مرحبًا، أريد تصميم باقة مونتاج مخصصة:\nنوع المحتوى: ${getSelectedContent()}\nعدد الفيديوهات: ${videoCount.value}\nمدة الفيديو: ${videoDuration.value}\nالخدمات: ${services.length ? services.join('، ') : 'لم أحدد'}\nالميزانية: ${budget.value || 'لم أحدد'} جنيه\nملاحظات: ${notes.value || 'لا يوجد'}`;
+        }
+
+        builder.addEventListener('submit', async event => {
+            event.preventDefault();
+            if (!builder.reportValidity()) return;
+
+            const services = getSelectedServices();
+            if (builderSupabaseClient) {
+                const { error } = await builderSupabaseClient.from('orders').insert({
+                    customer_name: 'طلب باقة مخصصة',
+                    customer_email: '',
+                    package_type: getSelectedContent(),
+                    details: `عدد الفيديوهات: ${videoCount.value}; المدة: ${videoDuration.value}; الخدمات: ${services.join('، ') || 'لم أحدد'}; الملاحظات: ${notes.value || 'لا يوجد'}`,
+                    budget: budget.value ? Number(budget.value) : null
+                });
+                if (error) {
+                    alert('تعذر حفظ الطلب حاليًا، سيتم فتح واتساب لإرسال التفاصيل.');
+                }
+            }
+            window.open(`https://wa.me/201016022870?text=${encodeURIComponent(buildMessage())}`, '_blank', 'noopener,noreferrer');
+        });
+
+        document.getElementById('sharePackage').addEventListener('click', async () => {
+            const message = buildMessage();
+            if (navigator.share) {
+                try {
+                    await navigator.share({ title: 'باقة مونتاج مخصصة', text: message });
+                } catch (error) {
+                    if (error.name !== 'AbortError') throw error;
+                }
+            } else if (navigator.clipboard) {
+                await navigator.clipboard.writeText(message);
+                alert('تم نسخ تفاصيل الباقة، يمكنك إرسالها الآن.');
+            } else {
+                alert(message);
+            }
+        });
+
+        updateSummary();
+    </script>
+</body>
+</html>

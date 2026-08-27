@@ -1,0 +1,14 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Mahmoud Mostafa",
+  "alternateName": "Mahmoud Mostafa",
+  "jobTitle": "Video Editor",
+  "url": "http://localhost:8000/",
+  "sameAs": [
+    "https://www.youtube.com/@Video._.editor-M",
+    "https://www.facebook.com/mido.gamd.56/",
+    "https://www.tiktok.com/@mahmoud.m.salama1",
+    "http://www.behance.net/mofox3"
+  ]
+}

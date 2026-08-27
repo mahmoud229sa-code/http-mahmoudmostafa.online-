@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>غرفة التحكم | محمود مصطفى</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="icon" type="image/png" sizes="512x512" href="../assets/images/favicon-512.png">
+    <link rel="icon" type="image/png" sizes="256x256" href="../assets/images/favicon-256.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32.png">
+    <link rel="shortcut icon" href="../assets/images/favicon.ico">
+    <style>
+        .admin-page { min-height: 100vh; padding: 70px 0; background: transparent; }
+        .admin-header { display: flex; justify-content: space-between; align-items: center; gap: 20px; margin-bottom: 28px; }
+        .admin-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-bottom: 28px; }
+        .admin-stat, .admin-panel, .login-panel { padding: 24px; border: 1px solid var(--border-color); border-radius: 12px; background: var(--surface); }
+        .admin-stat span { color: var(--light-text); }
+        .admin-stat strong { display: block; margin-top: 8px; color: var(--primary-color); font-size: 2rem; }
+        .admin-panel h3 { margin-bottom: 18px; }
+        .login-panel { max-width: 440px; margin: 80px auto; }
+        .login-panel .builder-field { width: 100%; margin-bottom: 14px; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; background: rgba(0,0,0,.2); color: var(--text-color); }
+        .login-panel .btn { width: 100%; }
+        .admin-message { min-height: 24px; margin-top: 12px; color: #fca5a5; }
+        .admin-table-wrap { overflow-x: auto; }
+        .admin-table { width: 100%; border-collapse: collapse; min-width: 650px; }
+        .admin-table th, .admin-table td { padding: 12px 10px; border-bottom: 1px solid var(--border-color); text-align: right; vertical-align: top; }
+        .admin-table th { color: var(--primary-color); }
+        .admin-table td { color: var(--light-text); }
+        .status-select { padding: 6px; border: 1px solid var(--border-color); border-radius: 6px; background: var(--dark-bg); color: var(--text-color); }
+        .empty-state { color: var(--light-text); }
+        .content-manager { margin-top: 28px; }
+        .content-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-bottom: 24px; }
+        .content-form .full-width { grid-column: 1 / -1; }
+        .content-form input, .content-form select, .content-form textarea { width: 100%; padding: 11px 12px; border: 1px solid var(--border-color); border-radius: 8px; background: rgba(0,0,0,.18); color: var(--text-color); font: inherit; }
+        .content-form textarea { min-height: 100px; resize: vertical; }
+        .content-form-actions { display: flex; gap: 12px; align-items: center; }
+        .content-list { display: grid; gap: 10px; }
+        .content-row { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 14px; border: 1px solid var(--border-color); border-radius: 8px; }
+        .content-row small { color: var(--light-text); }
+        .content-row-actions { display: flex; gap: 8px; }
+        @media (max-width: 760px) { .content-form { grid-template-columns: 1fr; } .content-form .full-width { grid-column: auto; } .content-row { align-items: flex-start; flex-direction: column; } }
+        @media (max-width: 760px) { .admin-header { align-items: flex-start; flex-direction: column; } .admin-grid { grid-template-columns: 1fr; } }
+
+        .admin-page { position: relative; overflow: hidden; padding: 46px 0 80px; }
+        .admin-page::before { content: ''; position: fixed; inset: 0; pointer-events: none; background: radial-gradient(circle at 12% 15%, rgba(56, 189, 248, .12), transparent 28%), radial-gradient(circle at 90% 80%, rgba(124, 58, 237, .12), transparent 30%); }
+        .admin-page > .container { position: relative; z-index: 1; }
+        .admin-brand { display: inline-flex; align-items: center; gap: 11px; margin-bottom: 28px; color: var(--text-color); text-decoration: none; }
+        .admin-brand-mark { display: grid; width: 42px; height: 42px; place-items: center; border: 1px solid rgba(77, 228, 247, .45); border-radius: 13px; background: linear-gradient(135deg, rgba(56, 189, 248, .2), rgba(124, 58, 237, .25)); color: #4de4f7; box-shadow: 0 0 22px rgba(56, 189, 247, .18); }
+        .admin-brand strong, .admin-brand small { display: block; }
+        .admin-brand strong { font-size: 1rem; }
+        .admin-brand small { margin-top: 2px; color: var(--light-text); font-size: .75rem; }
+        .login-panel, .admin-stat, .admin-panel { border-color: rgba(109, 224, 239, .2); border-radius: 20px; background: rgba(4, 18, 39, .76); box-shadow: 0 24px 70px rgba(0, 0, 0, .2), 0 0 25px rgba(56, 189, 248, .06); backdrop-filter: blur(14px); }
+        .login-panel h2 { color: #d9fbff; }
+        .login-panel .builder-field, .content-form input, .content-form select, .content-form textarea { border-color: rgba(148, 163, 184, .24); background: rgba(2, 7, 19, .6); }
+        .admin-heading { display: flex; align-items: center; gap: 28px; }
+        .admin-heading .admin-brand { margin: 0; padding-left: 28px; border-left: 1px solid rgba(148, 163, 184, .2); }
+        .admin-heading h1 { margin-bottom: 5px; color: #d9fbff; }
+        .admin-heading p { color: #a9d7e7; }
+        .admin-header > .btn { min-width: 130px; }
+        .admin-stat { position: relative; overflow: hidden; }
+        .admin-stat::after { content: ''; position: absolute; left: -18px; bottom: -30px; width: 100px; height: 100px; border-radius: 50%; background: rgba(56, 189, 248, .1); }
+        .admin-stat strong { color: #4de4f7; text-shadow: 0 0 16px rgba(77, 228, 247, .35); }
+        .admin-panel h3 { color: #d9fbff; }
+        .admin-table th { border-bottom-color: rgba(109, 224, 239, .2); }
+        .admin-table td { color: #b9d8eb; }
+        .content-row { border-color: rgba(109, 224, 239, .16); background: rgba(255, 255, 255, .025); }
+        .content-row strong { color: #d9fbff; }
+        .status-select { border-color: rgba(77, 228, 247, .3); background: #081026; }
+        @media (max-width: 760px) { .admin-heading { align-items: flex-start; flex-direction: column; gap: 12px; } .admin-heading .admin-brand { padding-left: 0; border-left: 0; } .admin-page { padding-top: 28px; } }
+    </style>
+</head>
+<body>
+    <main class="admin-page">
+        <div class="container">
+            <section class="login-panel" id="loginPanel">
+                <a class="admin-brand" href="../index.html" aria-label="العودة إلى الصفحة الرئيسية">
+                    <span class="admin-brand-mark"><i class="fas fa-layer-group"></i></span>
+                    <span><strong>محمود مصطفى</strong><small>غرفة التحكم</small></span>
+                </a>
+                <h2>غرفة التحكم</h2>
+                <p>هذه الصفحة خاصة بالمالك فقط.</p>
+                <form id="loginForm">
+                    <input class="builder-field" id="email" type="email" placeholder="البريد الإلكتروني" required>
+                    <input class="builder-field" id="password" type="password" placeholder="كلمة المرور" required>
+                    <button class="btn btn-primary" type="submit">دخول</button>
+                </form>
+                <p class="admin-message" id="loginMessage" role="alert"></p>
+            </section>
+
+            <section id="dashboard" hidden>
+                <header class="admin-header">
+                    <div class="admin-heading"><a class="admin-brand" href="../index.html" aria-label="العودة إلى الصفحة الرئيسية"><span class="admin-brand-mark"><i class="fas fa-layer-group"></i></span><span><strong>محمود مصطفى</strong><small>غرفة التحكم</small></span></a><div><h1>لوحة التحكم</h1><p>متابعة الزوار وطلبات العملاء</p></div></div>
+                    <button class="btn btn-secondary" id="logoutButton" type="button">تسجيل الخروج</button>
+                </header>
+                <div class="admin-grid">
+                    <div class="admin-stat"><span>إجمالي الزيارات</span><strong id="visitorCount">0</strong></div>
+                    <div class="admin-stat"><span>إجمالي الطلبات</span><strong id="orderCount">0</strong></div>
+                    <div class="admin-stat"><span>طلبات جديدة</span><strong id="newOrderCount">0</strong></div>
+                </div>
+                <section class="admin-panel">
+                    <h3>طلبات الباقات</h3>
+                    <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>التاريخ</th><th>العميل</th><th>البريد</th><th>الباقة</th><th>التفاصيل</th><th>الميزانية</th><th>الحالة</th></tr></thead><tbody id="ordersBody"></tbody></table></div>
+                </section>
+                <section class="admin-panel content-manager">
+                    <h3>إدارة محتوى الموقع</h3>
+                    <form class="content-form" id="contentForm">
+                        <input type="hidden" id="contentId">
+                        <select id="contentType" required><option value="setting">نص أو إعداد</option><option value="skill">مهارة</option><option value="portfolio">عمل</option><option value="video">فيديو</option><option value="package">باقة</option><option value="review">رأي عميل</option></select>
+                        <input id="contentTitle" placeholder="العنوان أو اسم العميل" required>
+                        <input id="contentCategory" placeholder="التصنيف أو المجال">
+                        <input id="contentImage" placeholder="رابط الصورة أو الفيديو">
+                        <input id="contentIcon" placeholder="اسم الأيقونة مثل fa-video">
+                        <input id="contentRating" type="number" min="1" max="5" placeholder="التقييم من 1 إلى 5">
+                        <textarea class="full-width" id="contentDescription" placeholder="الوصف أو النص أو تفاصيل المحتوى"></textarea>
+                        <div class="content-form-actions full-width"><button class="btn btn-primary" type="submit">حفظ المحتوى</button><button class="btn btn-secondary" id="contentCancel" type="button">إلغاء التعديل</button></div>
+                    </form>
+                    <div class="content-list" id="contentList"></div>
+                </section>
+            </section>
+        </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../assets/js/supabase-config.js"></script>
+    <script>
+        const { createClient } = supabase;
+        const client = createClient(window.SUPABASE_CONFIG.url, window.SUPABASE_CONFIG.anonKey);
+        const loginPanel = document.getElementById('loginPanel');
+        const dashboard = document.getElementById('dashboard');
+        const loginForm = document.getElementById('loginForm');
+        const loginMessage = document.getElementById('loginMessage');
+        const ordersBody = document.getElementById('ordersBody');
+        const contentForm = document.getElementById('contentForm');
+        const contentList = document.getElementById('contentList');
+        const LOCAL_ADMIN_SESSION_KEY = 'mahmoud_admin_session';
+
+        function showMessage(message) { loginMessage.textContent = message; }
+        function isOwner(user) { return user && user.email && user.email.toLowerCase() === window.SUPABASE_CONFIG.ownerEmail.toLowerCase(); }
+        function hasOfflineAdminSession() { return localStorage.getItem(LOCAL_ADMIN_SESSION_KEY) === 'true'; }
+        function formatDate(date) { return new Date(date).toLocaleString('ar-EG'); }
+
+        async function loadDashboard() {
+            const { data: { user } } = await client.auth.getUser();
+            const offlineSession = hasOfflineAdminSession();
+            const isAuthorized = isOwner(user) || offlineSession;
+
+            if (!isAuthorized) {
+                await client.auth.signOut();
+                loginPanel.hidden = false;
+                dashboard.hidden = true;
+                showMessage('هذا الحساب غير مصرح له بالدخول.');
+                return;
+            }
+
+            loginPanel.hidden = true;
+            dashboard.hidden = false;
+
+            try {
+                const [{ count: visitors }, { data: orders, error }] = await Promise.all([
+                    client.from('visitors').select('*', { count: 'exact', head: true }),
+                    client.from('orders').select('*').order('created_at', { ascending: false })
+                ]);
+
+                if (error) {
+                    showMessage('تعذر تحميل البيانات. تأكد من تفعيل جدول Supabase أو من صحة تكوين المشروع.');
+                    return;
+                }
+
+                document.getElementById('visitorCount').textContent = visitors || 0;
+                document.getElementById('orderCount').textContent = orders.length;
+                document.getElementById('newOrderCount').textContent = orders.filter(order => order.status === 'new').length;
+                ordersBody.innerHTML = orders.length ? orders.map(order => `<tr><td>${formatDate(order.created_at)}</td><td>${escapeHtml(order.customer_name)}</td><td>${escapeHtml(order.customer_email || '-')}</td><td>${escapeHtml(order.package_type)}</td><td>${escapeHtml(order.details)}</td><td>${order.budget ? Number(order.budget).toLocaleString('ar-EG') + ' جنيه' : '-'}</td><td><select class="status-select" data-order-id="${order.id}"><option value="new" ${order.status === 'new' ? 'selected' : ''}>جديد</option><option value="contacted" ${order.status === 'contacted' ? 'selected' : ''}>تم التواصل</option><option value="completed" ${order.status === 'completed' ? 'selected' : ''}>مكتمل</option><option value="cancelled" ${order.status === 'cancelled' ? 'selected' : ''}>ملغي</option></select></td></tr>`).join('') : '<tr><td colspan="7" class="empty-state">لا توجد طلبات حتى الآن.</td></tr>';
+                await loadContent();
+            } catch (exception) {
+                showMessage('حدث خطأ أثناء تحميل لوحة التحكم.');
+            }
+        }
+
+        function escapeHtml(value) { return String(value).replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[character])); }
+
+        function resetContentForm() { contentForm.reset(); document.getElementById('contentId').value = ''; }
+        async function loadContent() {
+            const { data, error } = await client.from('site_content').select('*').order('content_type').order('sort_order');
+            if (error) { contentList.innerHTML = '<p class="empty-state">شغّل جدول site_content من ملف supabase-schema.sql أولًا.</p>'; return; }
+            contentList.innerHTML = data.length ? data.map(item => `<div class="content-row"><div><strong>${escapeHtml(item.title)}</strong><br><small>${escapeHtml(item.content_type)} ${item.is_visible ? '· ظاهر' : '· مخفي'}</small></div><div class="content-row-actions"><button class="btn btn-secondary edit-content" data-id="${item.id}" type="button">تعديل</button><button class="btn btn-secondary delete-content" data-id="${item.id}" type="button">حذف</button></div></div>`).join('') : '<p class="empty-state">لا يوجد محتوى مضاف حتى الآن.</p>';
+        }
+
+        contentForm.addEventListener('submit', async event => {
+            event.preventDefault();
+            const item = { content_type: document.getElementById('contentType').value, title: document.getElementById('contentTitle').value.trim(), category: document.getElementById('contentCategory').value.trim(), image_url: document.getElementById('contentImage').value.trim(), icon: document.getElementById('contentIcon').value.trim(), rating: Number(document.getElementById('contentRating').value) || null, description: document.getElementById('contentDescription').value.trim(), updated_at: new Date().toISOString() };
+            const id = document.getElementById('contentId').value;
+            const result = id ? await client.from('site_content').update(item).eq('id', id) : await client.from('site_content').insert(item);
+            if (result.error) { showMessage('تعذر حفظ المحتوى. تأكد من تشغيل جدول site_content والصلاحيات.'); return; }
+            resetContentForm(); await loadContent();
+        });
+
+        document.getElementById('contentCancel').addEventListener('click', resetContentForm);
+        contentList.addEventListener('click', async event => {
+            const id = event.target.dataset.id;
+            if (!id) return;
+            const { data, error } = await client.from('site_content').select('*').eq('id', id).single();
+            if (error) return;
+            if (event.target.classList.contains('edit-content')) {
+                document.getElementById('contentId').value = data.id; document.getElementById('contentType').value = data.content_type; document.getElementById('contentTitle').value = data.title; document.getElementById('contentCategory').value = data.category; document.getElementById('contentImage').value = data.image_url; document.getElementById('contentIcon').value = data.icon; document.getElementById('contentRating').value = data.rating || ''; document.getElementById('contentDescription').value = data.description;
+            } else if (event.target.classList.contains('delete-content') && confirm('حذف هذا المحتوى؟')) { await client.from('site_content').delete().eq('id', id); await loadContent(); }
+        });
+
+        loginForm.addEventListener('submit', async event => {
+            event.preventDefault();
+            showMessage('');
+
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const authResult = await client.auth.signInWithPassword({ email, password });
+
+            if (authResult.error) {
+                showMessage('بيانات الدخول غير صحيحة أو لم يتم تفعيل حساب Supabase لهذا البريد.');
+                return;
+            }
+
+            localStorage.setItem(LOCAL_ADMIN_SESSION_KEY, 'true');
+            await loadDashboard();
+        });
+
+        document.getElementById('logoutButton').addEventListener('click', async () => {
+            localStorage.removeItem(LOCAL_ADMIN_SESSION_KEY);
+            await client.auth.signOut();
+            location.reload();
+        });
+        ordersBody.addEventListener('change', async event => { if (!event.target.matches('.status-select')) return; await client.from('orders').update({ status: event.target.value }).eq('id', event.target.dataset.orderId); await loadDashboard(); });
+        client.auth.onAuthStateChange(() => loadDashboard());
+        loadDashboard();
+    </script>
+</body>
+</html>

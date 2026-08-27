@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0f172a" />
+  <title>محمود مصطفى | ملف مشاركة سريع</title>
+  <style>
+    :root {
+      --bg: #07111f;
+      --card: rgba(15, 23, 42, 0.9);
+      --text: #f8fafc;
+      --muted: #cbd5e1;
+      --accent: #22d3ee;
+      --accent-2: #f59e0b;
+      --line: rgba(255,255,255,0.12);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Tahoma, Arial, sans-serif;
+      background: linear-gradient(135deg, var(--bg), #111827 60%, #1e293b);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .page {
+      max-width: 960px;
+      margin: 0 auto;
+      background: rgba(10, 15, 29, 0.8);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+    }
+
+    .hero {
+      padding: 32px;
+      background: linear-gradient(120deg, rgba(34,211,238,0.16), rgba(245,158,11,0.14));
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 8px 12px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid var(--line);
+      color: #dbeafe;
+      border-radius: 999px;
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+
+    h1 { font-size: clamp(28px, 4vw, 42px); margin: 0 0 10px; }
+    .lead { font-size: 18px; line-height: 1.8; color: var(--muted); margin: 0 0 16px; }
+    .phone { font-size: 16px; margin: 6px 0; color: #fef3c7; }
+
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; }
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      padding: 12px 16px;
+      border-radius: 999px;
+      font-weight: bold;
+      transition: transform .2s ease;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary { background: linear-gradient(90deg, var(--accent), #0ea5e9); color: white; }
+    .btn-secondary { background: rgba(255,255,255,0.08); color: white; border: 1px solid var(--line); }
+
+    .panel {
+      background: var(--card);
+      padding: 24px;
+      border-top: 1px solid var(--line);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .box {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 16px;
+    }
+
+    .box h3 { margin-top: 0; font-size: 18px; }
+    .box p { color: var(--muted); line-height: 1.7; margin-bottom: 0; }
+
+    .mini-card {
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: 16px;
+      background: linear-gradient(90deg, rgba(34,211,238,0.18), rgba(245,158,11,0.14));
+      border: 1px solid var(--line);
+    }
+
+    .footer {
+      padding: 20px 32px 32px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 14px;
+    }
+
+    @media (max-width: 760px) {
+      .hero { grid-template-columns: 1fr; padding: 24px; }
+      .grid { grid-template-columns: 1fr; }
+      .footer { padding: 20px 24px 28px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <section class="hero">
+      <div>
+        <span class="badge">ملف مشاركة سريع — جاهز للفتح في كروم</span>
+        <a href="../public/index.html" aria-label="العودة إلى الصفحة الرئيسية"><h1>محمود مصطفى</h1></a>
+        <p class="lead">محرر فيديو ومصمم محتوى إبداعي متخصص في الإعلانات، المقدمات، والمونتاج الاحترافي للمنصات الاجتماعية.</p>
+        <p class="phone">📞 01016022870</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="https://wa.me/201016022870" target="_blank">تواصل عبر واتساب</a>
+          <a class="btn btn-secondary" href="#contact">عرض الخدمات</a>
+        </div>
+      </div>
+      <div class="box">
+        <h3>خدماتي</h3>
+        <p>مونتاج احترافي، تصميم فيديو، إعلانات سوشيال ميديا، مقدمات بصريّة، وأفكار محتوى جاهزة للتنفيذ.</p>
+        <div class="mini-card">
+          <strong>الهدف:</strong> تحويل الأفكار إلى فيديوهات قوية تجذب الانتباه وتزيد التفاعل.
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="contact">
+      <div class="grid">
+        <div class="box">
+          <h3>أعمالي</h3>
+          <p>أقدم محتوى بصري متميز بصياغة احترافية ومحتوى سريع ومناسب للشبكات الاجتماعية واليوتيوب.</p>
+        </div>
+        <div class="box">
+          <h3>التواصل</h3>
+          <p>يمكنك مراسلتي مباشرة أو فتح الملف في المتصفح لعرض المحتوى الكامل بصياغة احترافية وسهلة.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">
+      تم إعداد هذا الملف كنسخة بسيطة ومناسبة للإرسال عبر واتساب أو الفتح مباشرة في المتصفح.
+    </div>
+  </div>
+</body>
+</html>
