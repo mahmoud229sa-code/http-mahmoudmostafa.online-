@@ -756,8 +756,23 @@ revealElements.forEach(el => {
     el.classList.add('reveal-item');
     revealObserver.observe(el);
 });
+const reviewKeys = new Set();
+
+document.querySelectorAll('.review-card').forEach(card => {
+    const key = card.textContent
+        .replace(/\s+/g, ' ')
+        .trim()
+        .toLowerCase();
+
+    if (reviewKeys.has(key)) {
+        card.remove();
+    } else {
+        reviewKeys.add(key);
+    }
+});
 
 let reviewCards = Array.from(document.querySelectorAll('.review-card'));
+
 const reviewsGrid = document.querySelector('.reviews-grid');
 const reviewsAddButton = document.getElementById('reviewsAddButton');
 const reviewForm = document.getElementById('reviewForm');
