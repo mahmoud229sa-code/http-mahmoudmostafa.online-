@@ -136,11 +136,11 @@ function setLanguage(lang) {
     updateThemeButton(currentTheme, lang);
 }
 
-if (themeToggle) {
-    themeToggle.addEventListener('click', () => {
-        setTheme(document.body.classList.contains('dark-mode') ? 'light' : 'dark');
-    });
-}
+document.addEventListener('click', (event) => {
+    const button = event.target.closest('#themeToggle');
+    if (!button) return;
+    setTheme(document.body.classList.contains('dark-mode') ? 'light' : 'dark');
+});
 
 setLanguage(currentLang);
 setTheme(currentTheme);
