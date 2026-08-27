@@ -649,9 +649,18 @@ async function loadManagedContent() {
         }
     });
 
-    data.filter(item => item.content_type === 'portfolio').forEach(item => {
-        const grid = document.querySelector('.portfolio-grid');
+    const portfolioGrid = document.querySelector('.portfolio-grid');
+const portfolioSlots = portfolioGrid
+    ? Math.max(0, 3 - portfolioGrid.querySelectorAll('.portfolio-item').length)
+    : 0;
+
+data
+    .filter(item => item.content_type === 'portfolio')
+    .slice(0, portfolioSlots)
+    .forEach(item => {
+        const grid = portfolioGrid;
         const card = document.createElement('div');
+
         card.className = 'portfolio-item';
         card.dataset.category = item.category || 'all';
         card.innerHTML = `<div class="portfolio-image"><img src="${item.image_url || 'assets/images/1159372.png'}" alt=""></div><div class="portfolio-info"><h3></h3><p></p></div>`;
