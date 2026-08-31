@@ -174,41 +174,33 @@ window.addEventListener('scroll', () => {
 // ============================================
 
 const filterButtons = document.querySelectorAll('.filter-btn');
-const portfolioItems = document.querySelectorAll('.portfolio-item');
 
-filterButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        // Remove active class from all buttons
-        filterButtons.forEach(btn => btn.classList.remove('active'));
-        // Add active class to clicked button
-        button.classList.add('active');
+function setupPortfolioFilter() {
+    const portfolioItems = document.querySelectorAll('.portfolio-item');
 
-        const filter = button.getAttribute('data-filter');
+    filterButtons.forEach(button => {
+        button.onclick = () => {
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
 
-        // Filter portfolio items
-        portfolioItems.forEach(item => {
-            if (filter === 'all' || item.getAttribute('data-category') === filter) {
-                item.style.display = 'block';
-                setTimeout(() => {
-                    item.style.opacity = '1';
-                    item.style.transform = 'scale(1)';
-                }, 50);
-            } else {
-                item.style.opacity = '0';
-                item.style.transform = 'scale(0.8)';
-                setTimeout(() => {
-                    item.style.display = 'none';
-                }, 300);
-            }
-        });
+            const filter = button.getAttribute('data-filter');
+
+            portfolioItems.forEach(item => {
+                const matches = filter === 'all' || item.getAttribute('data-category') === filter;
+                item.style.display = matches ? 'block' : 'none';
+                item.style.opacity = matches ? '1' : '0';
+                item.style.transform = matches ? 'scale(1)' : 'scale(0.8)';
+            });
+        };
     });
-});
 
-// Set initial animation for portfolio items
-portfolioItems.forEach(item => {
-    item.style.transition = 'all 0.3s ease';
-    item.style.opacity = '1';
-});
+    portfolioItems.forEach(item => {
+        item.style.transition = 'all 0.3s ease';
+        item.style.opacity = '1';
+    });
+}
+
+setupPortfolioFilter();
 
 // ============================================
 // Contact Form
@@ -649,18 +641,30 @@ async function loadManagedContent() {
         }
     });
 
-    data.filter(item => item.content_type === 'portfolio').forEach(item => {
-        const grid = document.querySelector('.portfolio-grid');
-        const card = document.createElement('div');
-        card.className = 'portfolio-item';
-        card.dataset.category = item.category || 'all';
-        card.innerHTML = `<div class="portfolio-image"><img src="${item.image_url || 'assets/images/1159372.png'}" alt=""></div><div class="portfolio-info"><h3></h3><p></p></div>`;
-        card.querySelector('img').alt = item.title;
-        card.querySelector('h3').textContent = item.title;
-        card.querySelector('p').textContent = item.description;
-        if (item.image_url && /^https?:\/\//i.test(item.image_url)) card.addEventListener('click', () => window.open(item.image_url, '_blank', 'noopener,noreferrer'));
-        grid.appendChild(card);
-    });
+    const portfolioGrid = document.querySelector('.portfolio-grid');
+    if (portfolioGrid) {
+        const existingTitles = new Set(Array.from(portfolioGrid.querySelectorAll('.portfolio-item h3')).map(title => title.textContent.trim()));
+
+        data.filter(item => item.content_type === 'portfolio').forEach(item => {
+            const title = (item.title || '').trim();
+            const description = (item.description || '').trim();
+            if (!title || existingTitles.has(title)) return;
+
+            const card = document.createElement('div');
+            card.className = 'portfolio-item';
+            card.dataset.category = item.category || 'all';
+            card.dataset.source = 'managed';
+            card.innerHTML = `<div class="portfolio-image"><img src="${item.image_url || 'assets/images/1159372.png'}" alt=""></div><div class="portfolio-info"><h3></h3><p></p></div>`;
+            card.querySelector('img').alt = title;
+            card.querySelector('h3').textContent = title;
+            card.querySelector('p').textContent = description;
+            if (item.image_url && /^https?:\/\//i.test(item.image_url)) card.addEventListener('click', () => window.open(item.image_url, '_blank', 'noopener,noreferrer'));
+            portfolioGrid.appendChild(card);
+            existingTitles.add(title);
+        });
+
+        setupPortfolioFilter();
+    }
 
     data.filter(item => item.content_type === 'review').forEach(item => {
         const grid = document.querySelector('.reviews-grid');
